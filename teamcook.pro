@@ -1,4 +1,4 @@
-QT += qml quick core bluetooth
+QT += qml quick core bluetooth charts gui widgets
 
 CONFIG += c++11
 
@@ -17,5 +17,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     Button.qml \
     InputBox.qml \
-    Search.qml \
-    Chat.qml
+    Search.qml
