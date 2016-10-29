@@ -43,10 +43,13 @@ import QtBluetooth 5.3
 
 Item {
     id: top
-    height: 100
+    height: 30
+    width: 200
 
     property string remoteDeviceName: ""
     property bool serviceFound: false
+
+    signal dataReceived(string data)
 
     BluetoothService {
         id: btService
@@ -111,20 +114,36 @@ Item {
         }
 
         onStringDataChanged: {
-            console.log("Received data: " )
-            console.log(JSON.stringify(stringData))
+            console.log("Received data: " );
+            var str = JSON.stringify(stringData);
+            console.log(str)
+            dataReceived(str)
         }
     }
 
     Rectangle {
         id: background
-        z: 0
         anchors.fill: parent
-        color: "#5d5b59"
+        color: "yellow"
+        opacity: 0.2
     }
 
     Text {
         id: debugText
         anchors.fill: parent
+    }
+
+    Button {
+        anchors.right: parent.right
+        width: 30
+        height: 30
+        label: "tt"
+
+        property int tstData: 0
+
+        onButtonClick: {
+            dataReceived(tstData.toString());
+            tstData = tstData + 1
+        }
     }
 }
