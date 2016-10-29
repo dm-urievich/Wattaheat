@@ -25,7 +25,11 @@ DISTFILES += \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat \
-    android/src/org/qtproject/example/TeamCook.java
+    android/src/org/qtproject/example/TeamCook.java \
+    regression.js \
+    prediction.js \
+    RoundProgress.qml \
+    ChartPage.qml
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 

@@ -15,14 +15,12 @@ Item {
 //        currentIndex: tabBar.currentIndex
 
         MainPage {
+
         }
 
-        Page {
-            Label {
-                text: qsTr("Second page")
-                anchors.centerIn: parent
-            }
-        }
+//        ChartPage {
+
+//        }
     }
 
 //    footer: TabBar {
