@@ -43,8 +43,6 @@ import QtBluetooth 5.3
 
 Item {
     id: top
-    height: 30
-    width: 200
 
     property string remoteDeviceName: ""
     property bool serviceFound: false
@@ -115,8 +113,20 @@ Item {
 
         onStringDataChanged: {
             console.log("Received data: " );
-            var str = JSON.stringify(stringData);
+//            var str = JSON.stringify(stringData);
+            var str = stringData
+//            console.log(str)
+//            str = str.substring(0, data.indexOf('\n'))
+//            var str = stringData.toString();
+
+//            console.log("len " + str.length)
             console.log(str)
+
+
+//            for (var i = 0; i < str.length; i++) {
+//                console.log(str[i])
+//            }
+
             dataReceived(str)
         }
     }
