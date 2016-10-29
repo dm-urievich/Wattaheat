@@ -47,6 +47,8 @@ Item {
     property string remoteDeviceName: ""
     property bool serviceFound: false
 
+    property string debugText: ""
+
     signal dataReceived(string data)
 
     BluetoothService {
@@ -77,15 +79,15 @@ Item {
 
         onErrorChanged: {
             if (error != BluetoothDiscoveryModel.NoError && !btModel.running) {
-                debugText.text = "Discovery failed.\nPlease ensure Bluetooth is available."
+                debugText = "Discovery failed.\nPlease ensure Bluetooth is available."
             }
         }
 
         onDeviceDiscovered: {
             console.log(device);
 
-//            if (device == "00:13:03:13:70:83") {
-            if (device == "98:D3:31:80:75:22") {
+            if (device == "00:13:03:13:70:83") {
+//            if (device == "98:D3:31:80:75:22") {
                 console.log("set address to service")
                 btService.deviceAddress = device;
             }
@@ -96,7 +98,7 @@ Item {
                 return
             serviceFound = true
             console.log("Found new service " + service.deviceAddress + " " + service.deviceName + " " + service.serviceName);
-            debugText.text = "Connecting to server...";
+            debugText = "Connecting to server...";
             remoteDeviceName = service.deviceName
             socket.setService(service)
         }
@@ -108,7 +110,7 @@ Item {
 
         onSocketStateChanged: {
             console.log("Connected to server")
-            debugText.text = "Connected to server";
+            debugText = "Connected to server";
             top.state = "chatActive"
         }
 
@@ -129,32 +131,6 @@ Item {
 //            }
 
             dataReceived(str)
-        }
-    }
-
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        color: "yellow"
-        opacity: 0.2
-    }
-
-    Text {
-        id: debugText
-        anchors.fill: parent
-    }
-
-    Button {
-        anchors.right: parent.right
-        width: 30
-        height: 30
-        label: "tt"
-
-        property int tstData: 0
-
-        onButtonClick: {
-            dataReceived(tstData.toString());
-            tstData = tstData + 1
         }
     }
 }

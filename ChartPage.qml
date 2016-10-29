@@ -8,49 +8,52 @@ Ctrl.Page {
 
     property var tempData: []
 
+    property var prevTime: new Date()
+
+    property string btStatus: ""
+
+    function newTemp(data) {
+        var flt = parseFloat(data)
+
+        if (flt) {
+            tempData.push(flt);
+
+            var currentTime = new Date
+            var delta = currentTime.getTime() - prevTime.getTime()
+            prevTime = currentTime;
+
+            var x = mainChart.lastX + delta / 1000
+
+            if (mainChart.count === 0) {
+                x = 0;
+            }
+
+            mainChart.append(x, flt);
+            mainChart.lastX = x //mainChart.lastX + delta / 1000
+
+            tempModel.append({"temp": flt});
+
+            axisX.max = Math.max(120, mainChart.lastX);
+            currentTempText.text = flt + " °C"
+
+            console.log(tempData)
+        }
+        else {
+            console.log("bad data")
+        }
+    }
+
     Column {
         anchors.fill: parent
         spacing: 5
 
-        BtManager {
-            id: btManager
+        Text {
             anchors.horizontalCenter: parent.horizontalCenter
             height: 50
             width: parent.width - 10
-
-            property var prevTime: new Date()
-
-            onDataReceived: {
-                var flt = parseFloat(data)
-
-                if (flt) {
-                    tempData.push(flt);
-
-                    var currentTime = new Date
-                    var delta = currentTime.getTime() - prevTime.getTime()
-                    prevTime = currentTime;
-
-                    var x = mainChart.lastX + delta / 1000
-
-                    if (mainChart.count === 0) {
-                        x = 0;
-                    }
-
-                    mainChart.append(x, flt);
-                    mainChart.lastX = x //mainChart.lastX + delta / 1000
-
-                    tempModel.append({"temp": flt});
-
-                    axisX.max = Math.max(120, mainChart.lastX);
-                    currentTempText.text = flt + " °C"
-
-                    console.log(tempData)
-                }
-                else {
-                    console.log("bad data")
-                }
-            }
+            text: btStatus
         }
+
 
         Item {
             id: tempChart
@@ -89,18 +92,6 @@ Ctrl.Page {
 
                     property real lastX: 0
                 }
-
-
-//                SplineSeries {
-//                    name: "SplineSeries"
-//                    XYPoint { x: 0; y: 0.0 }
-//                    XYPoint { x: 2.1; y: 3.2 }
-//                    XYPoint { x: 2.9; y: 2.4 }
-//                    XYPoint { x: 2.1; y: 2.1 }
-//                    XYPoint { x: 2.9; y: 2.6 }
-//                    XYPoint { x: 3.4; y: 2.3 }
-//                    XYPoint { x: 4.1; y: 3.1 }
-//                }
             }
         }
 

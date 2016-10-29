@@ -8,5 +8,7 @@
         <file>MainPage.qml</file>
         <file>ChartPage.qml</file>
         <file>RoundProgress.qml</file>
+        <file>Prediction.qml</file>
+        <file>regression.js</file>
     </qresource>
 </RCC>
