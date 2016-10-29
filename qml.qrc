@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Chat.qml</file>
+        <file>InputBox.qml</file>
+        <file>Button.qml</file>
+        <file>Search.qml</file>
+        <file>MainPage.qml</file>
+    </qresource>
+</RCC>
