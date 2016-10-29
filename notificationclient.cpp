@@ -51,6 +51,8 @@
 #include "notificationclient.h"
 
 #include <QtAndroidExtras/QAndroidJniObject>
+#include <QtAndroidExtras/QAndroidJniEnvironment>
+#include <QDebug>
 
 NotificationClient::NotificationClient(QObject *parent)
     : QObject(parent)
@@ -60,9 +62,6 @@ NotificationClient::NotificationClient(QObject *parent)
 
 void NotificationClient::setNotification(const QString &notification)
 {
-    if (m_notification == notification)
-        return;
-
     m_notification = notification;
     emit notificationChanged();
 }
@@ -75,8 +74,17 @@ QString NotificationClient::notification() const
 void NotificationClient::updateAndroidNotification()
 {
     QAndroidJniObject javaNotification = QAndroidJniObject::fromString(m_notification);
-    QAndroidJniObject::callStaticMethod<void>("org/qtproject/example/notification/NotificationClient",
+    QAndroidJniObject::callStaticMethod<void>("org/qtproject/example/TeamCook",
                                        "notify",
                                        "(Ljava/lang/String;)V",
                                        javaNotification.object<jstring>());
+
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck()) {
+        env->ExceptionDescribe();
+        // Handle exception here.
+        qDebug() << "EXCEPTION!!!";
+
+        env->ExceptionClear();
+    }
 }

@@ -5,6 +5,9 @@
 #include <QtQuick/QQuickView>
 #include <QtCore/QDir>
 #include <QtQml/QQmlEngine>
+#include <QQmlContext>
+
+#include "notificationclient.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +23,10 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QQuickView viewer;
+
+    NotificationClient *notificationClient = new NotificationClient(&viewer);
+    viewer.engine()->rootContext()->setContextProperty(QLatin1String("notificationClient"),
+                                                     notificationClient);
 
     viewer.setSource(QUrl("qrc:/main.qml"));
     viewer.setResizeMode(QQuickView::SizeRootObjectToView);

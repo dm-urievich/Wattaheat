@@ -48,25 +48,35 @@
 **
 ****************************************************************************/
 
-package org.qtproject.example.notification;
+package org.qtproject.example;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.util.Log;
 
-public class NotificationClient extends org.qtproject.qt5.android.bindings.QtActivity
+public class TeamCook extends org.qtproject.qt5.android.bindings.QtActivity
 {
     private static NotificationManager m_notificationManager;
     private static Notification.Builder m_builder;
-    private static NotificationClient m_instance;
+    private static TeamCook m_instance;
 
-    public NotificationClient()
+    public TeamCook()
     {
+        Log.d("myy", "init TeamCook instance");
         m_instance = this;
     }
 
     public static void notify(String s)
     {
+        Log.d("myy", "call notify");
+
+        if (m_instance == null) {
+            Log.d("myy", "you have to initialize instance");
+
+            return;
+        }
+
         if (m_notificationManager == null) {
             m_notificationManager = (NotificationManager)m_instance.getSystemService(Context.NOTIFICATION_SERVICE);
             m_builder = new Notification.Builder(m_instance);

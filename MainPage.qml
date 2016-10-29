@@ -1,9 +1,9 @@
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.0 as Ctrl
 import QtQuick 2.2
 import QtCharts 2.0
 import QtQuick.Window 2.2
 
-Page {
+Ctrl.Page {
     id: root
 
     property var tempData: []
@@ -130,6 +130,18 @@ Page {
                     font.pointSize: 14
                     text: temp
                 }
+            }
+        }
+
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 300
+            height: 100
+            label: "make happy"
+
+            onButtonClick: {
+                console.log("send notification")
+                notificationClient.notification = "User is happy!"
             }
         }
     }
