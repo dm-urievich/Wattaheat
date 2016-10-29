@@ -84,7 +84,8 @@ Item {
         onDeviceDiscovered: {
             console.log(device);
 
-            if (device == "00:13:03:13:70:83") {
+//            if (device == "00:13:03:13:70:83") {
+            if (device == "98:D3:31:80:75:22") {
                 console.log("set address to service")
                 btService.deviceAddress = device;
             }
@@ -120,7 +121,7 @@ Item {
 //            var str = stringData.toString();
 
 //            console.log("len " + str.length)
-            console.log(str)
+            console.log(JSON.stringify(stringData))
 
 
 //            for (var i = 0; i < str.length; i++) {

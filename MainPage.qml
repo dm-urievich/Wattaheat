@@ -1,6 +1,7 @@
 import QtQuick.Controls 2.0
 import QtQuick 2.2
 import QtCharts 2.0
+import QtQuick.Window 2.2
 
 Page {
     id: root
@@ -53,7 +54,7 @@ Page {
 
         Item {
             id: tempChart
-            height: 300
+            height: Screen.height / 2
             width: parent.width - 10
             anchors.horizontalCenter: parent.horizontalCenter
 

@@ -2,7 +2,8 @@ QT += qml quick core bluetooth charts gui widgets
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    notificationclient.cpp
 
 RESOURCES += qml.qrc
 
@@ -24,6 +25,10 @@ DISTFILES += \
     android/res/values/libs.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat
+    android/gradlew.bat \
+    android-sources/src/org/qtproject/example/notification/NotificationClient.java
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+HEADERS += \
+    notificationclient.h
