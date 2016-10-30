@@ -32,7 +32,6 @@ Item {
         signal clicked()
 
         onPaint: {
-            console.log("Paint");
             var ctx = getContext("2d");
             ctx.save();
 
@@ -107,7 +106,6 @@ Item {
     onMaximumValueChanged: knob.requestPaint()
     onCurrentValueChanged: {
         knob.requestPaint();
-        console.log("Value changed");
     }
 
     Component.objectName: knob.requestPaint()

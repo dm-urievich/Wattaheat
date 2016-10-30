@@ -3,8 +3,8 @@ import QtQuick 2.0
 import "regression.js" as MathFunction
 
 Item {
-    property real targetTemp: 100.0 // Target temperature, in degrees
-    property int nFitPoints: 10 // Number of points for fitting
+    property real targetTemp: 0//100.0 // Target temperature, in degrees
+    property int nFitPoints: 20 //10 // Number of points for fitting
     property var temp_arr: []
     property var prediction_time: 1000
     property var estimated_time: 600
@@ -29,5 +29,6 @@ Item {
 
         console.log("prediction " + prediction_time)
         console.log(estimated_time);
+        console.log("temp " + targetTemp);
     }
 }

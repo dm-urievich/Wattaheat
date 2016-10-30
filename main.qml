@@ -4,9 +4,12 @@ import QtQuick.Layouts 1.0
 
 //ApplicationWindow {
 Item {
+    id: root
     visible: true
     property real current_temp: 25.0
     property bool notifiSent: false
+
+    property real targetTemp: 65.0
 
     BtManager {
         id: btManager
@@ -21,12 +24,12 @@ Item {
                 prediction.add_sample(mainPage.currentTemp);
                 console.log("Input: "+ flt + "Filtered: "+ mainPage.currentTemp);
 
-                if (flt >= 100 && !notifiSent) {
-                    notificationClient.notification = "Taa-aa-dam :)";
+                if (mainPage.currentTemp >= targetTemp && !notifiSent) {
+                    notificationClient.notification = "Time to put your white oolong tea to teapot!";
                     notifiSent = true;
                 }
 
-                if (flt < 80) {
+                if (mainPage.currentTemp < targetTemp - 20) {
                     notifiSent = false;
                 }
             }
@@ -46,7 +49,7 @@ Item {
     Prediction {
         id: prediction
 
-        targetTemp: mainPage.maxTemp
+        targetTemp: root.targetTemp
 
         onEstimated_timeChanged: {
             var min = Math.floor(prediction.estimated_time / 60);
@@ -75,6 +78,8 @@ Item {
 
         MainPage {
             id: mainPage
+
+            maxTemp: targetTemp
 
             estimatedTime: prediction.estimated_time
         }

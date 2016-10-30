@@ -2,6 +2,7 @@ import QtQuick.Controls 2.0 as Ctrl
 import QtQuick 2.2
 import QtCharts 2.0
 import QtQuick.Window 2.2
+import QtQuick.Controls.Styles 1.4
 
 Ctrl.Page {
     id: root
@@ -48,6 +49,37 @@ Ctrl.Page {
             height: Screen.height / 10
             width: parent.width
             color: "#99E265"
+
+//            Ctrl.ComboBox {
+//                anchors.fill: parent
+//                currentIndex: 0
+//                activeFocusOnPress: true
+//                style: ComboBoxStyle {
+//                    id: comboBox
+//                    background: Rectangle {
+//                        id: rectCategory
+//                        radius: 5
+//                        border.width: 2
+//                        color: "#fff"
+//                    }
+//                    label: Text {
+//                        verticalAlignment: Text.AlignVCenter
+//                        horizontalAlignment: Text.AlignHCenter
+//                        font.pointSize: 15
+//                        font.family: "Courier"
+//                        font.capitalization: Font.SmallCaps
+//                        color: "black"
+//                        text: control.currentText
+//                    }
+//                }
+
+//                model: ListModel {
+//                    id: cbItems
+//                    ListElement { text: "Banana" }
+//                    ListElement { text: "Apple" }
+//                    ListElement { text: "Coconut" }
+//                }
+//            }
         }
 
         Item {
@@ -75,7 +107,9 @@ Ctrl.Page {
             anchors.horizontalCenter: parent.horizontalCenter
             color: secondaryTextColor
             font.pointSize: 60
-            text: currentTemp + " °C"
+            text: currentTemp + decimalZero + " °C"
+
+            property string decimalZero: currentTemp.toString().length < 3 ? ".0" : ""
         }
 
         Item {
