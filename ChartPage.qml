@@ -11,6 +11,7 @@ Ctrl.Page {
     property var prevTime: new Date()
 
     property string btStatus: ""
+    property real current_temp: 25.0
 
     signal connectTo(string address)
 
@@ -36,17 +37,23 @@ Ctrl.Page {
 
             mainChart.append(x, flt);
             mainChart.lastX = x //mainChart.lastX + delta / 1000
-
+            filteredChart.append(x, low_pass_filter(flt));
             tempModel.append({"temp": flt});
 
             axisX.max = Math.max(120, mainChart.lastX);
             currentTempText.text = flt + " °C"
 
-            console.log(tempData)
+            //console.log(tempData)
         }
         else {
             console.log("bad data")
         }
+    }
+
+    function low_pass_filter(input_value) {
+        var alpha = 0.4;
+        current_temp = current_temp + (alpha * (input_value - current_temp));
+        return Math.round(10 * current_temp) / 10;
     }
 
     Column {
@@ -90,8 +97,16 @@ Ctrl.Page {
                     max: 105
                 }
 
-                SplineSeries {
+                LineSeries {
                     id: mainChart
+                    axisX: axisX
+                    axisY: axisY
+                    pointLabelsVisible: false
+
+                    property real lastX: 0
+                }
+                LineSeries {
+                    id: filteredChart
                     axisX: axisX
                     axisY: axisY
                     pointLabelsVisible: false

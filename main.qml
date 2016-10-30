@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.0
 //ApplicationWindow {
 Item {
     visible: true
-
+    property real current_temp: 25.0
     BtManager {
         id: btManager
 
@@ -15,14 +15,20 @@ Item {
             if (flt) {
                 chartPage.newTemp(data);
 
-                mainPage.currentTemp = flt;
-                prediction.add_sample(flt);
+                mainPage.currentTemp = low_pass_filter(flt);
+                prediction.add_sample(mainPage.currentTemp);
+                console.log("Input: "+ flt + "Filtered: "+ mainPage.currentTemp);
             }
         }
 
         onBluetoothDiscovered: {
             chartPage.addBuletoothDevice(macAddr);
         }
+    }
+    function low_pass_filter(input_value) {
+        var alpha = 0.4;
+        current_temp = current_temp + (alpha * (input_value - current_temp));
+        return Math.round(10 * current_temp) / 10;
     }
 
     Prediction {
