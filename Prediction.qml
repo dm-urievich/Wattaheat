@@ -11,6 +11,11 @@ Item {
 
     property var prevTime: new Date()
 
+    function reset() {
+        estimated_time = 600;
+        temp_arr = [];
+    }
+
     function add_sample(temp) {
         var currentTime = new Date()
         var delta = currentTime.getTime() - prevTime.getTime();

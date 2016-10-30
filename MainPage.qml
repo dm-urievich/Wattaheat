@@ -21,6 +21,8 @@ Ctrl.Page {
         color: "#000000"
     }
 
+    signal reset()
+
     Timer {
         interval: 100
         repeat: true
@@ -40,6 +42,10 @@ Ctrl.Page {
                 progressBar.currentValue = 0;
             }
         }
+    }
+
+    function resetProgressBar() {
+        progressBar.currentValue = 0;
     }
 
     Column {
@@ -95,6 +101,10 @@ Ctrl.Page {
 
             currentValue: 0
             text: estimatedMin + ":" + estimatedSec
+
+            onClicked: {
+                reset();
+            }
         }
 
         Item {

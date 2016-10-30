@@ -11,6 +11,8 @@ Item {
     property string text: "00:00"
     property real linewidth: 0.25
 
+    signal clicked()
+
     Canvas {
         id: knob
         anchors.fill: parent
@@ -28,8 +30,6 @@ Item {
         // we want both circle to start / end at 12 o'clock
         // without this offset we would start / end at 9 o'clock
         property real angleOffset: -Math.PI / 2
-
-        signal clicked()
 
         onPaint: {
             var ctx = getContext("2d");
@@ -91,13 +91,12 @@ Item {
             text: root.text
         }
 
-//        MouseArea {
-//            id: mouseArea
+        MouseArea {
+            id: mouseArea
 
-//            anchors.fill: parent
-//            onClicked: knob.clicked()
-//            onPressedChanged: knob.requestPaint()
-//        }
+            anchors.fill: parent
+            onClicked: root.clicked()
+        }
     }
 
     onPrimaryColorChanged: knob.requestPaint()

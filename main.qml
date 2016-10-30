@@ -25,7 +25,7 @@ Item {
                 console.log("Input: "+ flt + "Filtered: "+ mainPage.currentTemp);
 
                 if (mainPage.currentTemp >= targetTemp && !notifiSent) {
-                    notificationClient.notification = "Time to put your white oolong tea to teapot!";
+                    notificationClient.notification = "Time to pour white oolung tea!";
                     notifiSent = true;
                 }
 
@@ -82,6 +82,12 @@ Item {
             maxTemp: targetTemp
 
             estimatedTime: prediction.estimated_time
+
+            onReset: {
+                prediction.reset();
+                notifiSent = false;
+                current_temp = 25.0;
+            }
         }
 
         ChartPage {
