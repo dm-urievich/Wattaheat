@@ -10,5 +10,8 @@
         <file>RoundProgress.qml</file>
         <file>Prediction.qml</file>
         <file>regression.js</file>
+        <file>images/menu.png</file>
+        <file>images/menu@2x.png</file>
+        <file>TempSettingsMenuItem.qml</file>
     </qresource>
 </RCC>

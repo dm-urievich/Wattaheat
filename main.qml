@@ -9,7 +9,7 @@ Item {
     property real current_temp: 25.0
     property bool notifiSent: false
 
-    property real targetTemp: 65.0
+    property real targetTemp: 55.0
 
     BtManager {
         id: btManager
@@ -87,6 +87,12 @@ Item {
                 prediction.reset();
                 notifiSent = false;
                 current_temp = 25.0;
+            }
+
+            onSetTargetTemp: {
+                targetTemp = temp;
+                notifiSent = false;
+                console.log("new target temp " + targetTemp);
             }
         }
 

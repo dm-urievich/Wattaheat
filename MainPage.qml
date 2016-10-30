@@ -23,6 +23,8 @@ Ctrl.Page {
 
     signal reset()
 
+    signal setTargetTemp(real temp)
+
     Timer {
         interval: 100
         repeat: true
@@ -56,36 +58,61 @@ Ctrl.Page {
             width: parent.width
             color: "#99E265"
 
-//            Ctrl.ComboBox {
-//                anchors.fill: parent
-//                currentIndex: 0
-//                activeFocusOnPress: true
-//                style: ComboBoxStyle {
-//                    id: comboBox
-//                    background: Rectangle {
-//                        id: rectCategory
-//                        radius: 5
-//                        border.width: 2
-//                        color: "#fff"
-//                    }
-//                    label: Text {
-//                        verticalAlignment: Text.AlignVCenter
-//                        horizontalAlignment: Text.AlignHCenter
-//                        font.pointSize: 15
-//                        font.family: "Courier"
-//                        font.capitalization: Font.SmallCaps
-//                        color: "black"
-//                        text: control.currentText
-//                    }
-//                }
+            Ctrl.ToolButton {
+                anchors.right: parent.right
+                height: parent.height
+                width: height
+                contentItem: Image {
+                    fillMode: Image.Pad
+                    horizontalAlignment: Image.AlignHCenter
+                    verticalAlignment: Image.AlignVCenter
+                    source: "qrc:/images/menu.png"
+                }
+                onClicked: optionsMenu.open()
 
-//                model: ListModel {
-//                    id: cbItems
-//                    ListElement { text: "Banana" }
-//                    ListElement { text: "Apple" }
-//                    ListElement { text: "Coconut" }
-//                }
-//            }
+                Ctrl.Menu {
+                    id: optionsMenu
+                    width: Screen.width / 3.5
+                    x: parent.width - width
+                    transformOrigin: Menu.TopRight
+
+                    contentHeight: Screen.height / 10
+
+
+                    TempSettingsMenuItem {
+                        temp: 55
+                        onTriggered: setTargetTemp(temp)
+                    }
+                    TempSettingsMenuItem {
+                        temp: 65
+                        onTriggered: setTargetTemp(temp)
+                    }
+                    TempSettingsMenuItem {
+                        temp: 75
+                        onTriggered: setTargetTemp(temp)
+                    }
+                    TempSettingsMenuItem {
+                        temp: 80
+                        onTriggered: setTargetTemp(temp)
+                    }
+                    TempSettingsMenuItem {
+                        temp: 85
+                        onTriggered: setTargetTemp(temp)
+                    }
+                    TempSettingsMenuItem {
+                        temp: 90
+                        onTriggered: setTargetTemp(temp)
+                    }
+                    TempSettingsMenuItem {
+                        temp: 95
+                        onTriggered: setTargetTemp(temp)
+                    }
+                    TempSettingsMenuItem {
+                        temp: 100
+                        onTriggered: setTargetTemp(temp)
+                    }
+                }
+            }
         }
 
         Item {
@@ -104,6 +131,10 @@ Ctrl.Page {
 
             onClicked: {
                 reset();
+            }
+
+            onMaximumValueChanged: {
+                resetProgressBar();
             }
         }
 
