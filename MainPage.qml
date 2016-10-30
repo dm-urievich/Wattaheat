@@ -12,11 +12,33 @@ Ctrl.Page {
     property real currentTemp: 42.0
     property alias maxTemp: progressBar.maximumValue
 //    property alias estimatedTime: progressBar.text
-    property string estimatedMin: "00"
+    property string estimatedMin: "10"
     property string estimatedSec: "00"
+    property int estimatedTime: 600
 
     background: Rectangle {
         color: "#000000"
+    }
+
+    Timer {
+        interval: 100
+        repeat: true
+        running: true
+
+        onTriggered: {
+            if (estimatedTime < 600) {
+                var val = progressBar.currentValue + (progressBar.maximumValue - progressBar.currentValue) / (1000 * estimatedTime / interval)
+                if (val < progressBar.maximumValue) {
+                    progressBar.currentValue = val;
+                }
+                else {
+                    progressBar.currentValue = progressBar.maximumValue;
+                }
+            }
+            else {
+                progressBar.currentValue = 0;
+            }
+        }
     }
 
     Column {
@@ -39,7 +61,7 @@ Ctrl.Page {
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
 
-            currentValue: currentTemp
+            currentValue: 0
             text: estimatedMin + ":" + estimatedSec
         }
 

@@ -7,7 +7,7 @@ Item {
     property int nFitPoints: 10 // Number of points for fitting
     property var temp_arr: []
     property var prediction_time: 1000
-    property var estimated_time: 1000
+    property var estimated_time: 600
 
     property var prevTime: new Date()
 
@@ -23,9 +23,10 @@ Item {
             var slope = result.equation[0];
             var yIntercept = result.equation[1];
             prediction_time = (targetTemp - yIntercept) / slope;
-            estimated_time = Math.round((prediction_time - delta) / 1000);
+            var estTime = prediction_time - delta;
+            estimated_time = estTime < 0 ? 0 : Math.round((estTime) / 1000);
         }
-console.log(JSON.stringify(temp_arr));
+
         console.log("prediction " + prediction_time)
         console.log(estimated_time);
     }

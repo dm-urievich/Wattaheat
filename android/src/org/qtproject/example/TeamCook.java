@@ -82,6 +82,7 @@ public class TeamCook extends org.qtproject.qt5.android.bindings.QtActivity
             m_builder = new Notification.Builder(m_instance);
             m_builder.setSmallIcon(R.drawable.icon);
             m_builder.setContentTitle("A message from Qt!");
+            m_builder.setDefaults(Notification.DEFAULT_ALL);
         }
 
         m_builder.setContentText(s);

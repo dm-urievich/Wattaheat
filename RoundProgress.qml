@@ -7,7 +7,7 @@ Item {
 
     property real minimumValue: 0
     property real maximumValue: 100
-    property real currentValue: 20
+    property real currentValue: 0
     property string text: "00:00"
     property real linewidth: 0.25
 
