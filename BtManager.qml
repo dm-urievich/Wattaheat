@@ -50,6 +50,11 @@ Item {
     property string debugText: ""
 
     signal dataReceived(string data)
+    signal bluetoothDiscovered(string macAddr)
+
+    function setBtAddr(addr) {
+        btService.deviceAddress = addr;
+    }
 
     BluetoothService {
         id: btService
@@ -86,11 +91,13 @@ Item {
         onDeviceDiscovered: {
             console.log(device);
 
-            if (device == "00:13:03:13:70:83") {
-//            if (device == "98:D3:31:80:75:22") {
+//            if (device == "00:13:03:13:70:83") {      // my
+            if (device == "98:D3:31:80:75:22") {      // device
                 console.log("set address to service")
                 btService.deviceAddress = device;
             }
+
+            bluetoothDiscovered(device);
         }
 
         onServiceDiscovered: {

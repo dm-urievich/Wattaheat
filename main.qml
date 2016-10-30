@@ -19,6 +19,10 @@ Item {
                 prediction.add_sample(flt);
             }
         }
+
+        onBluetoothDiscovered: {
+            chartPage.addBuletoothDevice(macAddr);
+        }
     }
 
     Prediction {
@@ -29,6 +33,8 @@ Item {
         onEstimated_timeChanged: {
             var min = Math.floor(prediction.estimated_time / 60);
             var sec = prediction.estimated_time % 60;
+            sec = sec < 0 ? 0 : sec;
+            min = sec < 0 ? 0 : min;
 
             if (sec < 10) {
                 mainPage.estimatedSec = "0" + sec.toString();
@@ -58,6 +64,10 @@ Item {
         ChartPage {
             id: chartPage
             btStatus: btManager.debugText
+
+            onConnectTo: {
+                btManager.setBtAddr(address);
+            }
         }
     }
 }

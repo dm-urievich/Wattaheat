@@ -12,6 +12,12 @@ Ctrl.Page {
 
     property string btStatus: ""
 
+    signal connectTo(string address)
+
+    function addBuletoothDevice(macAddress) {
+        blueDevModel.append({"macAddr": macAddress});
+    }
+
     function newTemp(data) {
         var flt = parseFloat(data)
 
@@ -124,16 +130,68 @@ Ctrl.Page {
             }
         }
 
-//        Button {
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            width: 300
-//            height: 100
-//            label: "make happy"
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 300
+            height: 100
+            label: "make happy"
 
-//            onButtonClick: {
-//                console.log("send notification")
-//                notificationClient.notification = "User is happy!"
-//            }
-//        }
+            onButtonClick: {
+                console.log("send notification")
+                notificationClient.notification = "User is happy!"
+            }
+        }
+
+        ListModel {
+            id: blueDevModel
+        }
+
+        Item {
+            width: parent.width
+            height: 300
+
+            ListView {
+                id: bluetoothDevices
+                width: 300
+                anchors.left: parent.left
+                height: 300
+                model: blueDevModel
+                clip: true
+                delegate: Component {
+                    Text {
+                        font.pointSize: 14
+                        text: macAddr
+                    }
+                }
+            }
+
+            Button {
+                id: toMy
+                anchors.right: parent.right
+                anchors.top: parent.top
+                width: 200
+                height: 100
+                label: "to test"
+
+                onButtonClick: {
+                    console.log("connect to test");
+                    connectTo("00:13:03:13:70:83");
+                }
+            }
+
+            Button {
+                id: toDevice
+                anchors.right: parent.right
+                anchors.top: toMy.bottom
+                width: 200
+                height: 100
+                label: "to device"
+
+                onButtonClick: {
+                    console.log("connect to device");
+                    connectTo("98:D3:31:80:75:22");
+                }
+            }
+        }
     }
 }
