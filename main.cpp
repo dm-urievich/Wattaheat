@@ -1,6 +1,3 @@
-//#include <QGuiApplication>
-//#include <QQmlApplicationEngine>
-
 #include <QtWidgets/QApplication>
 #include <QtQuick/QQuickView>
 #include <QtCore/QDir>
@@ -11,22 +8,11 @@
 
 int main(int argc, char *argv[])
 {
-//    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-//    QGuiApplication app(argc, argv);
-
-//    QQmlApplicationEngine engine;
-//    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
-
-
-
     // Qt Charts uses Qt Graphics View Framework for drawing, therefore QApplication must be used.
     QApplication app(argc, argv);
-
     QQuickView viewer;
 
-    NotificationClient *notificationClient = new NotificationClient(&viewer);
-    viewer.engine()->rootContext()->setContextProperty(QLatin1String("notificationClient"),
-                                                     notificationClient);
+    qmlRegisterType<NotificationClient>("TeamCook", 1, 0, "NotificationClient");
 
     viewer.setSource(QUrl("qrc:/main.qml"));
     viewer.setResizeMode(QQuickView::SizeRootObjectToView);

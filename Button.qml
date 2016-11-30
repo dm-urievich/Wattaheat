@@ -48,11 +48,11 @@ Rectangle {
     property string label
 
     // Set appearance properties
-    radius: 3
+    radius: 7
     antialiasing: true
-    border.width: 1
-    border.color: "#35322f"
-    color: "#14aaff"
+    border.width: 2
+    border.color: "#99E265"
+    color: "#E0F6D0"
     height: buttonLabel.height * 1.5
     width: buttonLabel.width * 1.5
 

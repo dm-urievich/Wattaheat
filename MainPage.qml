@@ -68,50 +68,50 @@ Ctrl.Page {
                     verticalAlignment: Image.AlignVCenter
                     source: "qrc:/images/menu.png"
                 }
-                onClicked: optionsMenu.open()
+//                onClicked: optionsMenu.open()
 
-                Ctrl.Menu {
-                    id: optionsMenu
-                    width: Screen.width / 3.5
-                    x: parent.width - width
-                    transformOrigin: Menu.TopRight
+//                Ctrl.Menu {
+//                    id: optionsMenu
+//                    width: Screen.width / 3.5
+//                    x: parent.width - width
+//                    transformOrigin: Ctrl.Menu.TopRight
 
-                    contentHeight: Screen.height / 10
+//                    contentHeight: Screen.height / 10
 
 
-                    TempSettingsMenuItem {
-                        temp: 55
-                        onTriggered: setTargetTemp(temp)
-                    }
-                    TempSettingsMenuItem {
-                        temp: 65
-                        onTriggered: setTargetTemp(temp)
-                    }
-                    TempSettingsMenuItem {
-                        temp: 75
-                        onTriggered: setTargetTemp(temp)
-                    }
-                    TempSettingsMenuItem {
-                        temp: 80
-                        onTriggered: setTargetTemp(temp)
-                    }
-                    TempSettingsMenuItem {
-                        temp: 85
-                        onTriggered: setTargetTemp(temp)
-                    }
-                    TempSettingsMenuItem {
-                        temp: 90
-                        onTriggered: setTargetTemp(temp)
-                    }
-                    TempSettingsMenuItem {
-                        temp: 95
-                        onTriggered: setTargetTemp(temp)
-                    }
-                    TempSettingsMenuItem {
-                        temp: 100
-                        onTriggered: setTargetTemp(temp)
-                    }
-                }
+//                    TempSettingsMenuItem {
+//                        temp: 55
+//                        onTriggered: setTargetTemp(temp)
+//                    }
+//                    TempSettingsMenuItem {
+//                        temp: 65
+//                        onTriggered: setTargetTemp(temp)
+//                    }
+//                    TempSettingsMenuItem {
+//                        temp: 75
+//                        onTriggered: setTargetTemp(temp)
+//                    }
+//                    TempSettingsMenuItem {
+//                        temp: 80
+//                        onTriggered: setTargetTemp(temp)
+//                    }
+//                    TempSettingsMenuItem {
+//                        temp: 85
+//                        onTriggered: setTargetTemp(temp)
+//                    }
+//                    TempSettingsMenuItem {
+//                        temp: 90
+//                        onTriggered: setTargetTemp(temp)
+//                    }
+//                    TempSettingsMenuItem {
+//                        temp: 95
+//                        onTriggered: setTargetTemp(temp)
+//                    }
+//                    TempSettingsMenuItem {
+//                        temp: 100
+//                        onTriggered: setTargetTemp(temp)
+//                    }
+//                }
             }
         }
 
@@ -158,12 +158,54 @@ Ctrl.Page {
             width: parent.width
         }
 
-        Text {
-            id: joke
+//        Text {
+//            id: joke
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            color: secondaryTextColor
+//            font.pointSize: 22
+//            text: "Enough time for facebook feed"
+//        }
+
+        Ctrl.Slider {
+            id: targetTempslider
+            width: parent.width / 1.4
             anchors.horizontalCenter: parent.horizontalCenter
-            color: secondaryTextColor
-            font.pointSize: 22
-            text: "Enough time for facebook feed"
+
+            value: 55.0
+            to: 100
+            from: 25
+            stepSize: 5
+            snapMode: Ctrl.Slider.SnapAlways
+
+            onValueChanged: setTargetTemp(value)
+
+            background: Rectangle {
+                x: targetTempslider.leftPadding
+                y: targetTempslider.topPadding + targetTempslider.availableHeight / 2 - height / 2
+                implicitWidth: 200
+                implicitHeight: 4
+                width: targetTempslider.availableWidth
+                height: implicitHeight
+                radius: 2
+                color: "#E0F6D0"
+
+                Rectangle {
+                    width: targetTempslider.visualPosition * parent.width
+                    height: parent.height
+                    color: "#99E265"
+                    radius: 2
+                }
+            }
+
+            handle: Rectangle {
+                x: targetTempslider.leftPadding + targetTempslider.visualPosition * (targetTempslider.availableWidth - width)
+                y: targetTempslider.topPadding + targetTempslider.availableHeight / 2 - height / 2
+                implicitWidth: 26
+                implicitHeight: 26
+                radius: 13
+                color: targetTempslider.pressed ? "#f0f0f0" : "#f6f6f6"
+                border.color: "#bdbebf"
+            }
         }
     }
 }

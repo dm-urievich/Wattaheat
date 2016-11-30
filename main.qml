@@ -2,7 +2,8 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 
-//ApplicationWindow {
+import TeamCook 1.0
+
 Item {
     id: root
     visible: true
@@ -10,18 +11,68 @@ Item {
     property bool notifiSent: false
 
     property real targetTemp: 55.0
+    property real preditionTime: 9999
+
+    property var tempArray: []
+
+    NotificationClient {
+        id: notificationClient
+    }
 
     BtManager {
         id: btManager
 
         onDataReceived: {
-            var flt = parseFloat(data);
+            console.log(data)
+            var gg = JSON.parse(data);
 
-            if (flt && flt > 20) {
-                chartPage.newTemp(data);
+            var flt = Math.round((gg.Tobj * 0.02 - 273) * 10) / 10;
+
+            console.log(flt)
+
+            if (flt && flt > 10) {
+                chartPage.newTemp(flt);
 
                 mainPage.currentTemp = low_pass_filter(flt);
-                prediction.add_sample(mainPage.currentTemp);
+
+                tempArray.push(mainPage.currentTemp);
+
+                if (tempArray.length > 30) {
+                    console.log("target time " + targetTemp);
+                    preditionTime = notificationClient.prediction(tempArray, targetTemp);
+                    console.log("prediction time " + preditionTime);
+
+                    if (preditionTime != 9999) {
+                        mainPage.estimatedTime = preditionTime - tempArray.length;
+                        chartPage.predictedTime = preditionTime;
+
+                        var min = Math.floor(mainPage.estimatedTime / 60);
+                        var sec = mainPage.estimatedTime % 60;
+                        if (sec < 0) {
+                            sec = 0;
+                        }
+
+                        if (min < 0) {
+                            min = 0;
+                        }
+
+                        if (sec < 10) {
+                            mainPage.estimatedSec = "0" + sec.toString();
+                        }
+                        else {
+                            mainPage.estimatedSec = sec.toString();
+                        }
+
+                        if (min < 10) {
+                            mainPage.estimatedMin = "0" + min.toString();
+                        }
+                        else {
+                            mainPage.estimatedMin = min.toString();
+                        }
+                    }
+                }
+
+//                prediction.add_sample(mainPage.currentTemp);
                 console.log("Input: "+ flt + "Filtered: "+ mainPage.currentTemp);
 
                 if (mainPage.currentTemp >= targetTemp && !notifiSent) {
@@ -36,7 +87,7 @@ Item {
         }
 
         onBluetoothDiscovered: {
-            chartPage.addBuletoothDevice(macAddr);
+            developerPage.addBuletoothDevice(macAddr);
         }
     }
 
@@ -81,12 +132,14 @@ Item {
 
             maxTemp: targetTemp
 
-            estimatedTime: prediction.estimated_time
+//            estimatedTime: prediction.estimated_time
 
             onReset: {
                 prediction.reset();
                 notifiSent = false;
                 current_temp = 25.0;
+                tempArray = [];
+                chartPage.clearCharts();
             }
 
             onSetTargetTemp: {
@@ -98,6 +151,11 @@ Item {
 
         ChartPage {
             id: chartPage
+            targetTemp: root.targetTemp
+        }
+
+        DeveloperPage {
+            id: developerPage
             btStatus: btManager.debugText
 
             onConnectTo: {

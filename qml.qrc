@@ -13,5 +13,6 @@
         <file>images/menu.png</file>
         <file>images/menu@2x.png</file>
         <file>TempSettingsMenuItem.qml</file>
+        <file>DeveloperPage.qml</file>
     </qresource>
 </RCC>

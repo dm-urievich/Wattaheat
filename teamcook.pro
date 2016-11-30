@@ -3,7 +3,8 @@ QT += qml quick core bluetooth charts gui widgets androidextras
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    notificationclient.cpp
+    notificationclient.cpp \
+    levmarq.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,4 +35,5 @@ DISTFILES += \
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 HEADERS += \
-    notificationclient.h
+    notificationclient.h \
+    levmarq.h

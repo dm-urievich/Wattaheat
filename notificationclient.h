@@ -56,18 +56,32 @@
 class NotificationClient : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString notification READ notification WRITE setNotification NOTIFY notificationChanged)
+
 public:
+    Q_PROPERTY(QString notification READ notification WRITE setNotification NOTIFY notificationChanged)
+
+    Q_INVOKABLE QString testData(QString pp);
+    Q_INVOKABLE void logFile(QString data);
+    Q_INVOKABLE double prediction(QList<double> data, double targetTemp);
+    Q_INVOKABLE double model(double time);
+
     explicit NotificationClient(QObject *parent = 0);
 
     void setNotification(const QString &notification);
     QString notification() const;
+
+    QString getLogFile();
 
 signals:
     void notificationChanged();
 
 private slots:
     void updateAndroidNotification();
+
+protected:
+    static double newton_func(double *par, int x, void *fdata);
+    static void gradient(double *g, double *par, int x, void *fdata);
+    int temp_to_time(double *par, double temp);
 
 private:
     QString m_notification;
